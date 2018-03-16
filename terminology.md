@@ -7,4 +7,4 @@
 并发性和并行性是相关概念，但有细微差别。并发意味着两个或多个任务正在取得进展，尽管它们可能不是同时刻执行的。例如，可以用时间切片来实现任务的部分顺序执行，并与其他任务的部分混合。另一方面，并行性在执行可以是真正同时发生时出现。
 
 
-![Concurrence](../images/concurrency.png)
+![Concurrence](https://github.com/kwang1971/akka.net/docs/images/concurrency.png)
