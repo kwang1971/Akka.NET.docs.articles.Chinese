@@ -175,6 +175,6 @@ Normally stopping a child (i.e. not in response to a failure) will not automatic
 
 Please note that creating one-off actors from an all-for-one supervisor entails that failures escalated by the temporary actor will affect all the permanent ones. If this is not desired, install an intermediate supervisor; this can very easily be done by declaring a router of size 1 for the worker, see [Routing](xref:routers).
 
-通常阻止孩子（即不响应失败）不会自动终止，其他的孩子都在一个一个的策略；这可以很容易地通过看他们的生命周期：如果`终止`消息不是由主管处理，它将` deathpactexception `这（取决于其主管）将重新启动它，并默认` prerestart `操作会终止所有的孩子。当然，这也可以明确地处理。
+通常停止Actor（即不响应失败）不会自动终止其他的子Actor，都在一个对一个的策略；这可以很容易地通过看他们的生命周期：如果`终止`消息不是由监督者处理，它将` DeathPactException `这（取决于其主管）将重新启动它，并默认` prerestart `操作会终止所有的孩子。当然，这也可以明确地处理。
 
-请注意，由一对一的主管创建一次性演员意味着临时演员升级失败将影响所有永久演员。如果不需要安装一个中级主管；这可以很容易地被宣布为工人路由器大小1，见[路径]（外部参照：路由器）。
+请注意，由一对一的主管创建一次性Actor 意味着临时演员升级失败将影响所有永久演员。如果不需要安装一个中级主管；这可以很容易地被宣布为工人路由器大小1，见 see [Routing](xref:routers).）。
