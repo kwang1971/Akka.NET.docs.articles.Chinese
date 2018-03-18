@@ -155,25 +155,21 @@ var supervisor = BackoffSupervisor.Props(
 
 
 ## One-For-One Strategy vs. All-For-One Strategy
-There are two classes of supervision strategies which come with Akka: `OneForOneStrategy` and `AllForOneStrategy`. Both are configured with a mapping from exception type to supervision directive and limits on how often a child is allowed to fail before terminating it. The difference between them is that the former applies the obtained directive only to the failed child, whereas the latter applies it to all siblings as well. Normally, you should use the `OneForOneStrategy`, which also is the default if none is specified explicitly.
-
-有两类监管策略，跟阿亮：` oneforonestrategy `和` allforonestrategy `。两者都配置了从异常类型到监视指令的映射，并限制了在终止之前允许孩子失败的频率。它们之间的区别在于前者只向失败的孩子应用所获得的指令，而后者则将其应用于所有的兄弟姐妹。通常情况下，你应该使用` oneforonestrategy `，如果没有明确指定，这也是默认的。
 
 
-
+有两类监管策略，Akka: `OneForOneStrategy`和`AllForOneStrategy`。两者都配置了从异常类型到监视指令的映射，并限制了在终止之前允许子Actor的频率。它们之间的区别在于前者只向失败的子Actor应用所获得的指令，而后者则将其应用于所有的兄弟姐妹。通常情况下，你应该使用` oneforonestrategy `，如果没有明确指定，这也是默认的。
 
 ![One for one](/images/OneForOne.png)
 
-The `AllForOneStrategy` is applicable in cases where the ensemble of children has such tight dependencies among them, that a failure of one child affects the function of the others, i.e. they are inextricably linked. Since a restart does not clear out the mailbox, it often is best to terminate the children upon failure and re-create them explicitly from the supervisor (by watching the children's lifecycle); otherwise you have to make sure that it is no problem for any of the actors to receive a message which was queued before the restart but processed afterwards.
-的` allforonestrategy `如果儿童乐团如此紧密的它们之间的依赖关系是适用的，那一个失败的一个孩子会影响其他的功能，即它们之间有着千丝万缕的联系。由于启动不清理邮箱，这往往是最好的解除孩子在失败和重新明确由主管创建（通过看孩子们的生命周期）；否则，你必须确保它是没有问题的任何演员接收信息，但排队才重启处理后。
+
+
+`AllForOneStrategy`适用于子Actors之间有紧密的依赖关系，那一个失败的子Actor会影响其他的功能，即它们之间有着千丝万缕的联系。由于启动不清理邮箱，这往往是最好的解除子Actor在失败和重新明确由主管创建（通过看子Actor的生命周期）；否则，你必须确保它是没有问题的任何子Actor接收信息，但排队才重启处理后。
 
 
 
 ![All for one](/images/AllForOne.png)
 
-Normally stopping a child (i.e. not in response to a failure) will not automatically terminate the other children in an all-for-one strategy; this can easily be done by watching their lifecycle: if the `Terminated` message is not handled by the supervisor, it will throw a `DeathPactException` which (depending on its supervisor) will restart it, and the default `PreRestart` action will terminate all children. Of course this can be handled explicitly as well.
 
-Please note that creating one-off actors from an all-for-one supervisor entails that failures escalated by the temporary actor will affect all the permanent ones. If this is not desired, install an intermediate supervisor; this can very easily be done by declaring a router of size 1 for the worker, see [Routing](xref:routers).
 
 通常停止Actor（即不响应失败）不会自动终止其他的子Actor，都在一个对一个的策略；这可以很容易地通过看他们的生命周期：如果`终止`消息不是由监督者处理，它将` DeathPactException `这（取决于其主管）将重新启动它，并默认` prerestart `操作会终止所有的孩子。当然，这也可以明确地处理。
 
