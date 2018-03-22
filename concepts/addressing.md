@@ -38,7 +38,9 @@ title: Actor References, Paths and Addresses
 
  actor引用指定单个actor，引用的生命周期与actor的生命周期匹配; 一个actor路径代表一个actor可能会或可能不会居住的名字，而路径本身没有一个生命周期，它永远不会失效。您可以创建actor路径而不创建actor，但不能创建演员引用而不创建相应的Actor。您可以创建一个actor，终止它，然后使用相同的actor路径创建一个新actor。新创建的actor是actor的新角色。这不是同一个actor。一个actor引用旧的化身不适用于新的化身。发送给旧actor引用的消息即使具有相同的路径，也不会传递给新的actor。Messages sent to the old actor reference will not be delivered to the new incarnation even though they have the same path.
 
-### actor路径锚 每个actor路径都有一个地址组件，描述了相应actor可访问的协议和位置，后面跟着层次结构中actor的名称. 例子如下:
+### actor路径锚 
+
+每个actor路径都有一个地址组件，描述了相应actor可访问的协议和位置，后面跟着层次结构中actor的名称. 例子如下:
 
 ````csharp
 "akka://my-sys/user/service-a/worker1"                   // purely local
